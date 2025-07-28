@@ -27,29 +27,26 @@ A machine learning-powered web app that predicts employee salaries based on demo
 ---
 
 ## 🖥️ App Structure
-
-
 employee-salary-predictor/
 │
-├── app.py                      # Streamlit web app
-├── requirements.txt            # Python dependencies
-│
+├── app.py                  # Streamlit web app
+├── requirements.txt        # Python dependencies
 ├── data/
-│   └── adult 3.csv             # Input dataset
+│   └── adult 3.csv         # Input dataset
 │
 ├── models/
-│   └── best\_model.pkl          # Trained XGBoost model
+│   └── best_model.pkl      # Trained XGBoost model
 │
 ├── notebooks/
-│   ├── salary\_prediction.ipynb
-│   ├── predicted\_vs\_actual.png
-│   ├── salary\_distribution.png
-│   └── salary\_vs\_education.png
+│   └── salary_prediction.ipynb
 │
-├── assets/                     # Charts or logos used in the app
+├── assets/                 # Charts or logos used in the app
+│   ├── predicted_vs_actual.png
+│   ├── salary_distribution.png
+│   └── salary_vs_education.png
+│
 ├── .gitignore
-└── README.md                   # This file
-
+└── README.md               # This file
 
 ## 📦 Setup Instructions
 
