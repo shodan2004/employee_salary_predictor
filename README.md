@@ -1,4 +1,4 @@
-# 💼 Employee Salary Predictor
+# 💼 Employee Salary Predictor 
 A machine learning-powered web app that predicts employee salaries based on demographic and job-related inputs. Built with **Streamlit** and **XGBoost**, this app provides intuitive visuals, salary breakdowns, and trend projections.
 
 ---

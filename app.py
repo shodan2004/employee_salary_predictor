@@ -4,8 +4,7 @@ import joblib
 import matplotlib.pyplot as plt
 
 # === Load the Correct Model ===
-model = joblib.load("models/random_forest_salary_model.pkl")  # ✅ corrected path
-
+model = joblib.load("models/random_forest_salary_model.pkl")  
 # === Streamlit Page Setup ===
 st.set_page_config(page_title="Salary Predictor", layout="wide")
 st.title("💼 Employee Salary Predictor")
