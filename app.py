@@ -2,18 +2,16 @@ import streamlit as st
 import pandas as pd
 import joblib
 import matplotlib.pyplot as plt
-import numpy as np
-from math import sqrt
 
-# Load model
-model = joblib.load("models/XGBoost_salary_model.pkl")
+# === Load the Correct Model ===
+model = joblib.load("models/random_forest_salary_model.pkl")  # ✅ corrected path
 
+# === Streamlit Page Setup ===
 st.set_page_config(page_title="Salary Predictor", layout="wide")
 st.title("💼 Employee Salary Predictor")
+st.markdown("Enter employee details to estimate monthly and yearly salary with visual insights:")
 
-st.markdown("Enter employee details to estimate monthly and yearly salary with insights:")
-
-# === Input UI ===
+# === Input Section ===
 with st.container():
     col1, col2, col3 = st.columns(3)
 
@@ -39,7 +37,7 @@ with st.container():
 
     st.markdown("---")
 
-# === Predict Button ===
+# === Prediction Logic ===
 if st.button("🔍 Predict Salary"):
     input_data = pd.DataFrame({
         "Age": [age],
@@ -50,29 +48,32 @@ if st.button("🔍 Predict Salary"):
     })
 
     try:
+        # Make prediction
         monthly_salary = model.predict(input_data)[0]
         yearly_salary = monthly_salary * 12
 
-        # ==== Salary Display ====
+        # === Salary Display ===
         st.markdown("## 💰 Salary Estimate")
         st.success(f"**Estimated Monthly Salary:** ₹{monthly_salary:,.0f}")
         st.success(f"**Estimated Yearly Salary:** ₹{yearly_salary:,.0f}")
-        # --- Projection & Salary Breakdown side by side ---
-        st.markdown("### 📊 Salary Projection & Breakdown")
 
+        # === Visual Charts Section ===
+        st.markdown("### 📊 Salary Projection & Breakdown")
         colA, colB = st.columns(2)
 
+        # 1. 5-Year Projection Chart
         with colA:
             st.subheader("📈 5-Year Projection")
             years = [f"Year {i}" for i in range(1, 6)]
             projected = [monthly_salary * (1.05 ** i) for i in range(1, 6)]
 
-            fig3, ax3 = plt.subplots()
-            ax3.plot(years, projected, marker='o', color='green')
-            ax3.set_ylabel("Monthly Salary (₹)")
-            ax3.set_title("Projected Monthly Salary Growth")
-            st.pyplot(fig3)
+            fig1, ax1 = plt.subplots()
+            ax1.plot(years, projected, marker='o', color='green')
+            ax1.set_ylabel("Monthly Salary (₹)")
+            ax1.set_title("Projected Monthly Salary Growth")
+            st.pyplot(fig1)
 
+        # 2. Salary Breakdown Pie Chart
         with colB:
             st.subheader("📎 Salary Breakdown")
             breakdown_labels = ["Basic Pay", "Allowances", "Bonus"]
@@ -81,18 +82,12 @@ if st.button("🔍 Predict Salary"):
                 monthly_salary * 0.25,
                 monthly_salary * 0.15
             ]
-            dark_palette = ["#2E86AB", "#E07A5F", "#81B29A"]
+            colors = ["#2E86AB", "#E07A5F", "#81B29A"]
 
-            fig4, ax4 = plt.subplots()
-            ax4.pie(
-                breakdown_values,
-                labels=breakdown_labels,
-                autopct="%1.0f%%",
-                colors=dark_palette,
-                startangle=90
-            )
-            ax4.axis("equal")
-            st.pyplot(fig4)
+            fig2, ax2 = plt.subplots()
+            ax2.pie(breakdown_values, labels=breakdown_labels, autopct="%1.0f%%", colors=colors, startangle=90)
+            ax2.axis("equal")
+            st.pyplot(fig2)
 
     except Exception as e:
         st.error(f"Prediction failed: {e}")

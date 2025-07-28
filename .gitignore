@@ -1,4 +1,8 @@
-echo ".venv/" >> .gitignore
-echo "__pycache__/" >> .gitignore
-echo ".streamlit/secrets.toml" >> .gitignore
-echo "*.pkl" >> .gitignore
+venv/
+__pycache__/
+*.pkl
+*.pyc
+.DS_Store
+.env
+.secrets/
+.streamlit/secrets.toml
